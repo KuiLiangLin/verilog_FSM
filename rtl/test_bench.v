@@ -14,6 +14,13 @@ wire out;
 
 //**************************** module **********************//
 initial begin $display("===module : FSM Mealy Moor Gate_Level"); end
+//number of moor state = number of mealy state * number of output +1
+//Mealy FSM的輸出直接受輸入訊號的當前值影響，
+//而輸入訊號可能在一個時鐘周期內任意時刻變化，
+//這使得Mealy FSM對輸入的響應發生在當前時鐘周期，
+//比Moore有限狀態機對輸入訊號的響應要早一個周期。
+//因此，輸入訊號的雜訊可能影響在輸出的訊號。
+// small fsm -> binary, gray code; big fsm -> one hot
 Moor Moor(.rstn(rstn),
 			.clk(clk),
 			.in(in), 
@@ -66,8 +73,9 @@ initial begin
 		begin
 			force in = index_2[index_1];
 			if (out_moor != out_mealy) $display("Compare Error : mealy, moor");
-			if (out_moor != out_gate_level ) $display("Compare Error : moor, gate_level");
-			if (out_mealy != out_gate_level ) $display("Compare Error : mealy, gate_level");
+			else if (out_moor != out_gate_level ) $display("Compare Error : moor, gate_level");
+			else if (out_mealy != out_gate_level ) $display("Compare Error : mealy, gate_level");
+			//else $display("Compare OK");
 			#`CYCLE;
         end
 		$display("send : %d", index_2);
