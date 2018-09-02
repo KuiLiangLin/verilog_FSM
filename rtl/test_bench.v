@@ -15,11 +15,19 @@ wire out, sync_out;
 //**************************** module **********************//
 initial begin $display("===module : FSM Mealy Moor Gate_Level"); end
 //number of moor state = number of mealy state * number of output +1
-//Mealy FSM的輸出直接受輸入訊號的當前值影響，
-//而輸入訊號可能在一個時鐘周期內任意時刻變化，
-//這使得Mealy FSM對輸入的響應發生在當前時鐘周期，
-//比Moore有限狀態機對輸入訊號的響應要早一個周期。
-//因此，輸入訊號的雜訊可能影響在輸出的訊號。
+
+//Mealy Machines tend to have less states
+// Different outputs on arcs (n^2) rather than states (n)
+// Moore Machines are safer to use
+// Outputs change at clock edge (always one cycle later)
+// In Mealy machines, input change can cause output change as soon as
+//logic is done – a big problem when two machines are interconnected –
+//asynchronous feedback
+// Mealy Machines react faster to inputs
+// React in same cycle – don't need to wait for clock
+// In Moore machines, more logic may be necessary to decode state
+//into outputs – more gate delays after
+
 // small fsm -> binary, gray code; big fsm -> one hot
 Moor Moor(.rstn(rstn),
 			.clk(clk),
