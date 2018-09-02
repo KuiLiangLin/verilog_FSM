@@ -63,6 +63,7 @@ initial begin
 	$dumpvars(0,Moor);
 	$dumpvars(0,Mealy);
 	$dumpvars(0,Gate_Level);
+	$dumpvars(0,test_bench);
 	end
 
 initial begin
