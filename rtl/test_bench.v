@@ -6,11 +6,11 @@ module test_bench ();
 initial begin
     $display("//***************************************");
     $display("//==top input : clk, in, rstn");
-    $display("//==top output :  out");
+    $display("//==top output :  out, sync_out");
     $display("//***************************************");
     end
 reg clk, in, rstn;
-wire out;
+wire out, sync_out;
 
 //**************************** module **********************//
 initial begin $display("===module : FSM Mealy Moor Gate_Level"); end
@@ -30,13 +30,15 @@ Moor Moor(.rstn(rstn),
 Mealy Mealy(.rstn(rstn),
 			.clk(clk),
 			.in(in), 
-			.out(out_mealy)
+			.out(out_mealy),
+			.sync_out(sync_mealy_out)
 );
 
 Gate_Level Gate_Level(.rstn(rstn),
 			.clk(clk),
 			.in(in), 
-			.out(out_gate_level)
+			.out(out_gate_level),
+			.sync_out(sync_out_gate_level)
 );
 
 //**************************** clock gen **********************//
@@ -72,9 +74,9 @@ initial begin
         for(index_1 = 0; index_1 <= 13; index_1 = index_1 + 1)
 		begin
 			force in = index_2[index_1];
-			if (out_moor != out_mealy) $display("Compare Error : mealy, moor");
-			else if (out_moor != out_gate_level ) $display("Compare Error : moor, gate_level");
-			else if (out_mealy != out_gate_level ) $display("Compare Error : mealy, gate_level");
+			if (out_moor != sync_mealy_out) $display("Compare Error : mealy, moor");
+			else if (out_moor != sync_out_gate_level ) $display("Compare Error : moor, gate_level");
+			else if (sync_mealy_out != sync_out_gate_level ) $display("Compare Error : mealy, gate_level");
 			//else $display("Compare OK");
 			#`CYCLE;
         end

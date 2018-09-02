@@ -1,62 +1,59 @@
 `timescale 1ns/1ps
-module Mealy(clk, in, out, rstn );
+module Mealy(clk, in, out, rstn, sync_out );
 input wire clk, in, rstn;
-output reg out;
- 
-reg[1:0] state;
+output reg out, sync_out;
+  
+reg [1:0]  state;
+reg [1:0]  next_state;
 parameter S0 = 2'd0, S1 = 2'd1;
 parameter S2 = 2'd2, S3 = 2'd3;
 
 always@ (posedge clk, negedge rstn)
 begin
-	if (!rstn)
-		begin
-		out <= 1'd0;
-		state <= S0;	
-		end
+	if(!rstn)
+		state <= S0;
 	else
-		case(state)
-			S0: if(in == 1'd0)
-					begin 
-					out <= 1'd0;
-					state <= S0;
-					end
-				else 
-					begin
-					out <= 1'd0;
-					state <= S1;				
-					end
-			S1: if(in == 1'd0)
-					begin 
-					out <= 1'd0;
-					state <= S2;
-					end
-				else 
-					begin
-					out <= 1'd0;
-					state <= S0;				
-					end 
-			S2: if(in == 1'd0)
-					begin 
-					out <= 1'd0;
-					state <= S0;
-					end
-				else 
-					begin
-					out <= 1'd1;
-					state <= S3;				
-					end
-			S3: if(in == 1'd0)
-					begin 
-					out <= 1'd0;
-					state <= S2;
-					end
-				else 
-					begin
-					out <= 1'd0;
-					state <= S0;				
-					end
-		endcase
-end 
+		state <= next_state;
+end
+
+always@(*)
+begin
+	case(state)
+		S0: if(in == 1'd1)  next_state = S1;
+			else 			next_state = S0;					
+		S1: if(in == 1'd0)  next_state = S2;
+			else 			next_state = S0;
+		S2: if(in == 1'd1)  next_state = S3;
+			else 			next_state = S0;
+		S3: if(in == 1'd1)  next_state = S0;
+			else 			next_state = S2;		
+		default : 			next_state = S0;
+	endcase
+end
+
+always@(*)
+begin
+	case(state)
+		S0: if(in == 1'd1)  out = 1'd0;
+			else 			out = 1'd0;					
+		S1: if(in == 1'd0)  out = 1'd0;
+			else 			out = 1'd0;
+		S2: if(in == 1'd1)  out = 1'd1;
+			else 			out = 1'd0;
+		S3: if(in == 1'd1)  out = 1'd0;
+			else 			out = 1'd0;		
+		default : 			out = 1'd0;
+	endcase
+end
+
+//synchronous mealy FSM
+always@ (posedge clk, negedge rstn)
+begin
+	if(!rstn)
+		sync_out <= 1'b0;
+	else
+		sync_out <= out;
+end
+
 //endmodule 
 endmodule

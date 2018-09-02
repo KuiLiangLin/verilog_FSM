@@ -1,7 +1,8 @@
 `timescale 1ns/1ps
-module Gate_Level(clk, in, out, rstn );
+module Gate_Level(clk, in, out, rstn, sync_out );
 input wire clk, in, rstn;
-output reg out;
+output reg  sync_out;
+output wire out;
 
 reg QA, QB; 
  
@@ -21,12 +22,13 @@ begin
 	else 		QA <= DA;
 end
 
-wire out_pre = QA & in & (~QB);
+assign out = QA & in & (~QB);
 
+//synchronous mealy FSM
 always@(posedge clk, negedge rstn)
 begin
-	if(!rstn) 	out <= 1'b0;
-	else 		out <= out_pre;
+	if(!rstn) 	sync_out <= 1'b0;
+	else 		sync_out <= out;
 end
 
 
