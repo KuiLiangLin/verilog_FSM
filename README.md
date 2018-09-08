@@ -34,7 +34,7 @@ After simplified by K-map, we get gate level circuit.
 
 Test bench is used to see the comparision of output among Moore, Mealy, and equivalent gate level circuit.
 
-<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Waveform.jpg" height="100%" width="100%" >
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Waveform.JPG" height="100%" width="100%" >
 
 
 Conclusion : 
