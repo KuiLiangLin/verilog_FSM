@@ -6,19 +6,19 @@ if input sequence = 101, output = 1; else output = 0;
 
 Basic Mealy FSM structure : 
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Mealy_FSM_Structure.jpg)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Mealy_FSM_Structure.jpg" height="100%" width="100%" >
 
 According to Mealy FSM structure , we get Mealy FSM sequence :
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Mealy_FSM_Sequence.jpg)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Mealy_FSM_Sequence.jpg" height="100%" width="100%" >
 
 Basic Moore FSM structure : 
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Moore_FSM_Structure.jpg)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Moore_FSM_Structure.jpg" height="100%" width="100%" >
 
 According to Moore FSM structure , we get Moore FSM sequence :
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Moore_FSM_Sequence.jpg)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Moore_FSM_Sequence.jpg" height="100%" width="100%" >
 
 According to the FSM sequence, we get truth table.
 
@@ -26,15 +26,15 @@ Because each bit of state is represented by a register, we know DA, DB, and outp
 
 Thus we use K-map to simplify them. 
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Truth_Table.jpg)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Truth_Table.jpg" height="100%" width="100%" >
 
 After simplified by K-map, we get gate level circuit.
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Gate_Level_Curcuit.jpg)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Gate_Level_Curcuit.jpg" height="100%" width="100%" >
 
 Test bench is used to see the comparision of output among Moore, Mealy, and equivalent gate level circuit.
 
-![image](https://github.com/KuiLiangLin/verilog_FSM/blob/master/Waveform.JPG)
+<img src="https://raw.githubusercontent.com/KuiLiangLin/verilog_FSM/master/Waveform.jpg" height="100%" width="100%" >
 
 
 Conclusion : 
@@ -65,5 +65,8 @@ Conclusion :
    
    (only two bits are changed while state changes)
 
-
+<hr>
+<h3> END </h3>
+<ul><li> Codes are <em><a href="https://github.com/KuiLiangLin/verilog_FSM/">Here</a></em>. </li></ul>
+<ul><li> You can return <em><a href="https://kuilianglin.github.io/Welcome/">My Main Page</a></em>. </li></ul>
 
