@@ -1,5 +1,9 @@
 # verilog_FSM
 
+<em><a href="https://github.com/KuiLiangLin/verilog_FSM/">View FSM on GitHub</a></em>.
+
+<hr>
+
 This is a basic project about FSM
 
 if input sequence = 101, output = 1; else output = 0;
@@ -67,6 +71,5 @@ Conclusion :
 
 <hr>
 <h3> END </h3>
-<ul><li> Codes are <em><a href="https://github.com/KuiLiangLin/verilog_FSM/">Here</a></em>. </li></ul>
 <ul><li> You can return <em><a href="https://kuilianglin.github.io/Welcome/">My Main Page</a></em>. </li></ul>
 
