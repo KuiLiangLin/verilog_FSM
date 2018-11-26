@@ -10,7 +10,9 @@ initial begin
     $display("//***************************************");
     end
 reg clk, in, rstn;
-wire out, sync_out;
+wire out_moor;
+wire out_mealy, sync_mealy_out;
+wire out_gate_level, sync_out_gate_level;
 
 //**************************** module **********************//
 initial begin $display("===module : FSM Mealy Moor Gate_Level"); end
@@ -29,25 +31,17 @@ initial begin $display("===module : FSM Mealy Moor Gate_Level"); end
 //into outputs – more gate delays after
 
 // small fsm -> binary, gray code; big fsm -> one hot
-Moor Moor(.rstn(rstn),
-			.clk(clk),
-			.in(in), 
-			.out(out_moor)
-);
 
-Mealy Mealy(.rstn(rstn),
-			.clk(clk),
-			.in(in), 
-			.out(out_mealy),
-			.sync_out(sync_mealy_out)
-);
+top_digital top_digital(.rstn(rstn),
+						.clk(clk),
+						.in(in), 
+						.out_moor(out_moor),
+						.out_mealy(out_mealy),
+						.sync_mealy_out(sync_mealy_out),					
+						.out_gate_level(out_gate_level),
+						.sync_out_gate_level(sync_out_gate_level)					
+					);
 
-Gate_Level Gate_Level(.rstn(rstn),
-			.clk(clk),
-			.in(in), 
-			.out(out_gate_level),
-			.sync_out(sync_out_gate_level)
-);
 
 //**************************** clock gen **********************//
 initial begin
@@ -60,10 +54,7 @@ initial begin
 initial begin
 	$display("===starting dump waveform");
 	$dumpfile("dump.vcd");
-	$dumpvars(0,Moor);
-	$dumpvars(0,Mealy);
-	$dumpvars(0,Gate_Level);
-	$dumpvars(0,test_bench);
+	$dumpvars(0,top_digital);
 	end
 
 initial begin
@@ -78,18 +69,25 @@ initial begin
 
 	RESET();
 
-	for(index_2 = 14'd0; index_2 <= 14'd500; index_2 = index_2 + 14'd7)
+	for(index_2 = 14'd0; index_2 <= 14'd500; index_2 = index_2 + 14'd1)
 	begin 
         for(index_1 = 0; index_1 <= 13; index_1 = index_1 + 1)
 		begin
 			force in = index_2[index_1];
-			if (out_moor != sync_mealy_out) $display("Compare Error : mealy, moor");
-			else if (out_moor != sync_out_gate_level ) $display("Compare Error : moor, gate_level");
-			else if (sync_mealy_out != sync_out_gate_level ) $display("Compare Error : mealy, gate_level");
+			if (out_moor != sync_mealy_out) 
+				$display("Compare Error : mealy, moor @ %t,", $time);
+			else if (out_moor != sync_out_gate_level ) 
+				$display("Compare Error : moor, gate_level @ %t,", $time);
+			else if (sync_mealy_out != sync_out_gate_level ) 
+				$display("Compare Error : mealy, gate_level @ %t,", $time);
 			//else $display("Compare OK");
 			#`CYCLE;
         end
-		$display("send : %d", index_2);
+		
+		if (index_2%14'd64 == 0)
+		begin 
+		$display("send : 0x%h, the time is %t", index_2, $time); 
+		end
 	end
 	
 	$display("===all done");

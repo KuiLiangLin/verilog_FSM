@@ -3,7 +3,7 @@ use warnings; use strict;
 use LWP::Simple;
 
 my $now_time = localtime;
-my $PATH = 'C:\Users\Lin\Documents\GitHub'.
+my $PATH = 'C:\Users\KuiLiangLin\Documents\GitHub'.
 			'\verilog_FSM\rtl\*';
 
 print ">>> TOP => Delet .out/.vvp/.vcd!\n";
